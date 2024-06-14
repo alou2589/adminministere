@@ -8,7 +8,12 @@
     $echelon=$data->echellon;
     $date_prise_service=date('Y-m-d',strtotime($data->date_prise_service));
     $date_avancement=date('Y-m-d',strtotime($data->date_avancement));
+    $date_debut_ministere=date('Y-m-d',strtotime($data->date_debut_ministere));
+    $type_agent_id=$data->type_agent_id;
     $agent_id=$data->agent_id;
+    $matricule=$data->matricule;
+    $fonction=$data->fonction;
+    $type_agent_id=$data->type_agent_id;
     $isOK=false;
     $msg="";
     
@@ -23,10 +28,10 @@
             $msg="Cet agent existe déjà";
         }
         else {
-                $sql="INSERT INTO statut_agent(agent_id,echellon,grade, hierarchie, date_prise_service,date_avancement) 
-                    VALUES(?,?,?,?,?,?) ";
+                $sql="INSERT INTO statut_agent(echellon,grade, hierarchie, date_prise_service,date_avancement,type_agent_id,matricule,fonction,agent_id) 
+                    VALUES(?,?,?,?,?,?,?,?,?,?) ";
                 $req=$db->prepare($sql);
-                $req->execute(array($agent_id, $echelon,$grade,$hierarchie,$date_prise_service,$date_avancement));
+                $req->execute(array($echelon, $grade,$hierarchie,$date_prise_service,$date_avancement,$date_debut_ministere,$type_agent_id, $matricule, $fonction, $agent_id));
                 if($req){
                     $isOK=true;
                     $msg="Insertion réussie";

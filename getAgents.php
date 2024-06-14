@@ -6,7 +6,7 @@
     
     try {
         //code...
-        $sql='SELECT * FROM agent';
+        $sql='SELECT * FROM agent ';
         $req=$db->query($sql);
         while($a= $req->fetch()) {
             # code...

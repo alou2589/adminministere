@@ -3,12 +3,11 @@
     include "encrypt.php";
     
     $data=json_decode(decrypt($_POST['data']));
-    $prenom=$data->prenom;
-    $nom=$data->nom;
-    $date_naissance=date('Y-m-d',strtotime($data->date_naissance));
-    $lieu_naissance=$data->lieu_naissance;
-    $genre=$data->genre;
-    $telephone=$data->telephone;
+    $statut_agent_id=$data->statut_agent_id;
+    $sous_structure_id=$data->sous_structure_id;
+    $poste_id=$data->poste_id;
+    $status_affectation=$data->status_affectation;
+    $date_affectation=date('Y-m-d',strtotime($data->date_affectation));
     $isOK=false;
     $msg="";
     
@@ -16,17 +15,17 @@
     //$data=json_decode(decrypt($_POST['data']));
     try {
         //code...
-        $agentData=$db->prepare("SELECT id FROM agent WHERE telephone=?");
-        $agentData->execute(array($telephone));
-        if($agentData->rowCount()>=1){
+        $affectationData=$db->prepare("SELECT id FROM affectation WHERE statut_agent_id=? AND status_affectation='en service' ");
+        $affectationData->execute(array($statut_agent_id));
+        if($affectationData->rowCount()>=1){
             $isOK=false;
-            $msg="Cet agent existe déjà";
+            $msg="Cet agent est toujours en service";
         }
         else {
-                $sql="INSERT INTO agent(prenom, nom, date_naissance, lieu_naissance,genre,telephone) 
+                $sql="INSERT INTO affectation(statut_agent_id, sous_structure_id, poste_id, status_affectation,date_affectation) 
                     VALUES(?,?,?,?,?,?) ";
                 $req=$db->prepare($sql);
-                $req->execute(array($prenom, $nom,$date_naissance,$lieu_naissance,$genre,$telephone));
+                $req->execute(array($statut_agent_id, $sous_structure_id,$poste_id,$status_affectation,$date_affectation));
                 if($req){
                     $isOK=true;
                     $msg="Insertion réussie";
