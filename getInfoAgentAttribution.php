@@ -10,8 +10,8 @@
         $sql='SELECT * FROM attribution a 
                 INNER JOIN materiel m ON(a.matos_id=m.id) 
                 INNER JOIN affectation aff ON(a.affectation_id=aff.id)
-                INNER JOIN statut_agent_id sa ON(aff.statut_agent_id=sa.id)
-                INNER JOIN agent ag ON(a.agent_id=ag.id)
+                INNER JOIN statut_agent sa ON(aff.statut_agent_id=sa.id)
+                INNER JOIN agent ag ON(aff.agent_id=ag.id)
                 INNER JOIN type_materiel t ON(m.type_matos_id=t.id)
                 WHERE a.affectation_id=?';
         $req=$db->prepare($sql);
